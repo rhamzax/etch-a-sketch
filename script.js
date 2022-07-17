@@ -11,6 +11,10 @@ document.body.onmousedown = () => (mouseDown = true)
 document.body.onmouseup = () => (mouseDown = false)
 
 const sketchPad = document.querySelector(".sketchPad");
+const colourBtn = document.querySelector('#colourBtn');
+const rainbowBtn = document.querySelector('#rainbowBtn');
+const erasorBtn = document.querySelector('#erasorBtn');
+const clearBtn = document.querySelector('#clearBtn');
 const sliderBtn = document.querySelector('#sizeSlider');
 const sliderText = document.querySelector('#sizeValue');
 
@@ -26,7 +30,6 @@ function createElements(){
 }
 
 function createSketchPad(size){
-
     for(let i = 0; i < (size*size); i++){
         sketchPad.appendChild(createElements());
     }
@@ -52,7 +55,11 @@ function changeColor(e){
 function erasorMode(){
     this.style.backgroundColor = "white";
 }
+
+function activeMode(){
+
+}
 window.onload = () => {
     createSketchPad(DEFAULT_SIZE);
-    // activateButton(DEFAULT_MODE);
+    // activateMode(DEFAULT_MODE);
 }
