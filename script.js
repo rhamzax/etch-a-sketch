@@ -1,6 +1,6 @@
 const DEFAULT_SIZE = 16;
-const DEFAULT_MODE = "color";
-const DEFUALT_COLOR = "#333333"
+const DEFAULT_MODE = 'color';
+const DEFUALT_COLOR = '#333333'
 
 let currentSize = DEFAULT_SIZE;
 let currentMode = DEFAULT_MODE;
@@ -10,13 +10,15 @@ let mouseDown = false
 document.body.onmousedown = () => (mouseDown = true)
 document.body.onmouseup = () => (mouseDown = false)
 
-const sketchPad = document.querySelector(".sketchPad");
+const sketchPad = document.querySelector('.sketchPad');
 const colourBtn = document.querySelector('#colourBtn');
 const rainbowBtn = document.querySelector('#rainbowBtn');
 const erasorBtn = document.querySelector('#erasorBtn');
 const clearBtn = document.querySelector('#clearBtn');
 const sliderBtn = document.querySelector('#sizeSlider');
 const sliderText = document.querySelector('#sizeValue');
+const modes = document.querySelectorAll('.mode');
+modes.forEach(mode => mode.addEventListener('click', activeMode))
 
 sliderBtn.addEventListener('input', resizeGrid)
 
@@ -48,18 +50,32 @@ function resizeGrid(){
 
 function changeColor(e){
     if (e.type === 'mouseover' && !mouseDown) return
-    this.style.backgroundColor = "black";
+    this.style.backgroundColor = 'black';
     console.log(sliderBtn.value);
 }
 
 function erasorMode(){
-    this.style.backgroundColor = "white";
+    this.style.backgroundColor = 'white';
 }
 
-function activeMode(){
+function activeMode(newMode){ 
+   if (currentMode === 'color'){
+    colourBtn.classList.remove('active');
+   }
+   else if(currentMode === 'rainbow'){
+    rainbowBtn.classList.remove('active');
+   }
+   else if(currentMode === 'erasor'){
+    erasorBtn.classList.remove('active');
+   }
+   if(newMode == undefined){
+    newMode = this.value;
+   }
+
+   console.log(newMode);
 
 }
 window.onload = () => {
     createSketchPad(DEFAULT_SIZE);
-    // activateMode(DEFAULT_MODE);
+    activeMode(DEFAULT_MODE);
 }
