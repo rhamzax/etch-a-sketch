@@ -1,6 +1,6 @@
 const DEFAULT_SIZE = 16;
-const DEFAULT_MODE = 'colour';
-const DEFUALT_COLOR = '#333333'
+const DEFAULT_MODE = 'color';
+const DEFUALT_COLOR = '#000000'
 
 let currentSize = DEFAULT_SIZE;
 let currentMode = DEFAULT_MODE;
@@ -11,7 +11,7 @@ document.body.onmousedown = () => (mouseDown = true)
 document.body.onmouseup = () => (mouseDown = false)
 
 const sketchPad = document.querySelector('.sketchPad');
-const colourBtn = document.querySelector('#colourBtn');
+const colorBtn = document.querySelector('#colorBtn');
 const rainbowBtn = document.querySelector('#rainbowBtn');
 const eraserBtn = document.querySelector('#eraserBtn');
 const clearBtn = document.querySelector('#clearBtn');
@@ -28,8 +28,8 @@ function createElements(){
     const gridElement = document.createElement('div');
 
     gridElement.className = 'grid-element';
-    gridElement.addEventListener('mousedown', changeColour)
-    gridElement.addEventListener('mouseover', changeColour)
+    gridElement.addEventListener('mousedown', changecolor)
+    gridElement.addEventListener('mouseover', changecolor)
     return gridElement;
 }
 
@@ -50,33 +50,41 @@ function resizeGrid(){
     sliderText.textContent = `${currentSize} x ${currentSize}`
 }
 
-function changeColour(e){
+function changecolor(e){
     if (e.type === 'mouseover' && !mouseDown) return
-    console.log(currentMode);
+    
     if(currentMode === 'eraser'){
-        this.style.backgroundColor = 'white';
+        eraserMode();
     }
-    else if (currentMode === 'colour'){
-        this.style.backgroundColor = currentColor;
+    else if (currentMode === 'color'){
+        colorMode();
     }
-    getColour();
+    else if (currentMode === 'rainbow'){
+        rainbowMode();
+    }
+    this.style.backgroundColor = currentColor;
 }
 
-function getColour(){
-    const colourPicker = document.querySelector('#colourPicker');
-    currentColor = colourPicker.value;
+function colorMode(){
+    const colorPicker = document.querySelector('#colorPicker');
+    currentColor = colorPicker.value;
 }
-// function eraserMode(){
-//     this.style.backgroundColor = 'white';
-// }
+function eraserMode(){
+    currentColor = '#FFFFFF';
+}
+
+function rainbowMode(){
+    let randomColor = Math.floor(Math.random()*16777215).toString(16);
+    currentColor = `#${randomColor}`; 
+}
 
 function activeMode(newMode){ 
     if(typeof newMode != 'string' ){
         newMode = this.value;
     }
     
-    if (currentMode === 'colour'){
-    colourBtn.classList.remove('active');
+    if (currentMode === 'color'){
+    colorBtn.classList.remove('active');
     }
     else if(currentMode === 'rainbow'){
     rainbowBtn.classList.remove('active');
@@ -85,8 +93,8 @@ function activeMode(newMode){
     eraserBtn.classList.remove('active');
     }
 
-    if (newMode === 'colour'){
-    colourBtn.classList.add('active');
+    if (newMode === 'color'){
+    colorBtn.classList.add('active');
     }
     else if(newMode === 'rainbow'){
     rainbowBtn.classList.add('active');
