@@ -1,5 +1,5 @@
 const DEFAULT_SIZE = 16;
-const DEFAULT_MODE = 'color';
+const DEFAULT_MODE = 'colour';
 const DEFUALT_COLOR = '#333333'
 
 let currentSize = DEFAULT_SIZE;
@@ -13,7 +13,7 @@ document.body.onmouseup = () => (mouseDown = false)
 const sketchPad = document.querySelector('.sketchPad');
 const colourBtn = document.querySelector('#colourBtn');
 const rainbowBtn = document.querySelector('#rainbowBtn');
-const erasorBtn = document.querySelector('#erasorBtn');
+const eraserBtn = document.querySelector('#eraserBtn');
 const clearBtn = document.querySelector('#clearBtn');
 const sliderBtn = document.querySelector('#sizeSlider');
 const sliderText = document.querySelector('#sizeValue');
@@ -21,13 +21,15 @@ const modes = document.querySelectorAll('.mode');
 modes.forEach(mode => mode.addEventListener('click', activeMode))
 
 sliderBtn.addEventListener('input', resizeGrid)
+clearBtn.addEventListener('click', clearGrid)
+
 
 function createElements(){
     const gridElement = document.createElement('div');
 
     gridElement.className = 'grid-element';
-    gridElement.addEventListener('mousedown', changeColor)
-    gridElement.addEventListener('mouseover', changeColor)
+    gridElement.addEventListener('mousedown', changeColour)
+    gridElement.addEventListener('mouseover', changeColour)
     return gridElement;
 }
 
@@ -39,41 +41,61 @@ function createSketchPad(size){
 }
 function clearGrid(){
     sketchPad.innerHTML = ''
+    createSketchPad(currentSize)
 }
 
 function resizeGrid(){
-    clearGrid();
     currentSize = this.value
-    createSketchPad(currentSize);
+    clearGrid();
     sliderText.textContent = `${currentSize} x ${currentSize}`
 }
 
-function changeColor(e){
+function changeColour(e){
     if (e.type === 'mouseover' && !mouseDown) return
-    this.style.backgroundColor = 'black';
-    console.log(sliderBtn.value);
+    console.log(currentMode);
+    if(currentMode === 'eraser'){
+        this.style.backgroundColor = 'white';
+    }
+    else if (currentMode === 'colour'){
+        this.style.backgroundColor = currentColor;
+    }
+    getColour();
 }
 
-function erasorMode(){
-    this.style.backgroundColor = 'white';
+function getColour(){
+    const colourPicker = document.querySelector('#colourPicker');
+    currentColor = colourPicker.value;
 }
+// function eraserMode(){
+//     this.style.backgroundColor = 'white';
+// }
 
 function activeMode(newMode){ 
-   if (currentMode === 'color'){
+    if(typeof newMode != 'string' ){
+        newMode = this.value;
+    }
+    
+    if (currentMode === 'colour'){
     colourBtn.classList.remove('active');
-   }
-   else if(currentMode === 'rainbow'){
+    }
+    else if(currentMode === 'rainbow'){
     rainbowBtn.classList.remove('active');
-   }
-   else if(currentMode === 'erasor'){
-    erasorBtn.classList.remove('active');
-   }
-   if(newMode == undefined){
-    newMode = this.value;
-   }
+    }
+    else if(currentMode === 'eraser'){
+    eraserBtn.classList.remove('active');
+    }
 
-   console.log(newMode);
+    if (newMode === 'colour'){
+    colourBtn.classList.add('active');
+    }
+    else if(newMode === 'rainbow'){
+    rainbowBtn.classList.add('active');
+    }
+    else if(newMode === 'eraser'){
+    eraserBtn.classList.add('active');
+    }
 
+    currentMode = newMode;
 }
 window.onload = () => {
     createSketchPad(DEFAULT_SIZE);
