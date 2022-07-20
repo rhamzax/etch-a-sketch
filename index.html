@@ -7,25 +7,34 @@
     <title>Etch-A-Sketch</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
+
+<script src="https://kit.fontawesome.com/b1fd3e5347.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <h1>Etch-A-Sketch</h1>
-    </header>
-    <div class="main">
-        <div class="choices">
-            <input id="colorPicker" type="color" value="#000000">
-            <button id="colorBtn" class="mode" value="color">Color Mode</button>
-            <button id="rainbowBtn" class="mode" value="rainbow">Rainbow Mode</button>
-            <button id="eraserBtn" class="mode" value="eraser">Eraser</button>
-            <button id="clearBtn" value="clear">Clear</button>
-            <p id="sizeValue">16 x 16</p>
-            <input id="sizeSlider" type="range" value="16" min="1" max="64">
-        </div>
-        <div class="sketchPad"></div>
+    <div class="container">
+        <header>
+            <h1>Etch-A-Sketch</h1>
+        </header>
+        <div class="main">
+            <div class="choices">
+                <input id="colorPicker" type="color" value="#000000">
+                <button id="colorBtn" class="mode" value="color">Color Mode</button>
+                <button id="rainbowBtn" class="mode" value="rainbow">Rainbow Mode</button>
+                <button id="eraserBtn" class="mode" value="eraser">Eraser</button>
+                <button id="clearBtn" value="clear">Clear</button>
+                <div class="slider">
+                    <p id="sizeValue">16 x 16</p>
+                    <input id="sizeSlider" type="range" value="16" min="1" max="64">
+                </div>
+            </div>
+            <div class="sketchPad"></div>
+        </div>   
     </div>
     <footer>
         Copyright © 2022 rhamzax
+        <a href="https://github.com/rhamzax" target="_blank">
+            <i class="fa-brands fa-github"></i></i>
+        </a>
     </footer>
 </body>
 </html>
